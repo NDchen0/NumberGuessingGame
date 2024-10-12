@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            padding: 10px;
+            width: 50px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            margin-left: 10px;
+        }
+        .message {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to the Number Guessing Game!</h1>
+    <p>Guess a number between 1 and 100:</p>
+    <input type="number" id="guess" min="1" max="100">
+    <button id="submitGuess">Submit Guess</button>
+
+    <div class="message" id="message"></div>
+
+    <script>
+        // Generate a random number between 1 and 100
+        const randomNumber = Math.floor(Math.random() * 100) + 1;
+        const messageDiv = document.getElementById('message');
+        const submitButton = document.getElementById('submitGuess');
+        const guessInput = document.getElementById('guess');
+
+        const askGuess = () => {
+            const guess = parseInt(guessInput.value, 10);
+
+            // Check if the guess is valid
+            if (isNaN(guess) || guess < 1 || guess > 100) {
+                messageDiv.textContent = 'Please enter a valid number between 1 and 100.';
+                return;
+            }
+
+            // Compare guess to the random number
+            if (guess < randomNumber) {
+                messageDiv.textContent = 'Too low! Try again.';
+            } else if (guess > randomNumber) {
+                messageDiv.textContent = 'Too high! Try again.';
+            } else {
+                messageDiv.textContent = `Congratulations! You've guessed the right number: ${randomNumber}`;
+                submitButton.disabled = true; // Disable button after correct guess
+            }
+
+            guessInput.value = ''; // Clear input field
+        };
+
+        // Event listener for button click
+        submitButton.addEventListener('click', askGuess);
+    </script>
+</body>
+</html>
